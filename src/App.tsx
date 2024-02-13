@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.scss";
-import Sidebar from "./components/sidebar/sidebar";
+import Sidebar from "./components/sidebar/Sidebar";
 
 function App() {
   return (
