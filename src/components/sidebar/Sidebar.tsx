@@ -13,12 +13,21 @@ import {
   collection,
   query,
   DocumentData,
+  addDoc,
 } from "firebase/firestore";
 import useCollection from "../../hooks/useCollection";
 
 const Sidebar = () => {
   const user = useAppSelector((state) => state.user);
   const { documents: channels } = useCollection("channels");
+
+  const addChannel = async () => {
+    let channelName: string | null = prompt("新しいチャンネルを作成します");
+
+    if (channelName) {
+      await addDoc(collection(db, "channels"), { channelName: channelName });
+    }
+  };
 
   return (
     <div className="sidebar">
@@ -45,7 +54,7 @@ const Sidebar = () => {
               <ExpandMoreIcon />
               <h4>プログラミングチャンネル</h4>
             </div>
-            <AddIcon className="sidebarAddIcon" />
+            <AddIcon className="sidebarAddIcon" onClick={() => addChannel()} />
           </div>
           <div className="sidebarChannelList">
             {channels.map((channel) => (
