@@ -14,31 +14,11 @@ import {
   query,
   DocumentData,
 } from "firebase/firestore";
-
-interface Channel {
-  id: string;
-  channel: DocumentData;
-}
+import useCollection from "../../hooks/useCollection";
 
 const Sidebar = () => {
-  const [channels, setChannels] = useState<Channel[]>([]);
-
   const user = useAppSelector((state) => state.user);
-
-  const q = query(collection(db, "channels"));
-
-  useEffect(() => {
-    onSnapshot(q, (querySnapshot) => {
-      const channelsResults: Channel[] = [];
-      querySnapshot.docs.forEach((doc) =>
-        channelsResults.push({
-          id: doc.id,
-          channel: doc.data(),
-        })
-      );
-      setChannels(channelsResults);
-    });
-  }, []);
+  const { documents: channels } = useCollection("channels");
 
   return (
     <div className="sidebar">
